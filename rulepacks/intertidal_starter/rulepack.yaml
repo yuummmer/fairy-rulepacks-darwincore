@@ -1,0 +1,72 @@
+meta:
+  name: intertidal_starter
+  version: 0.1.0
+  description: Starter ingestion checks for Darwin Core-ish occurrence tables (tested on OBIS tiny CSV)
+  target: csv
+
+tables:
+  occurrences:
+    path: datasets/intertidal_obis_tiny_seeded.csv
+
+rules:
+  # Core identifiers (blocking)
+  - id: dwc_occurrenceid_present
+    type: required
+    severity: fail
+    config:
+      pattern: "*seeded*.csv"
+      columns:
+        - occurrenceID
+
+  - id: dwc_occurrenceid_unique
+    type: unique
+    severity: fail
+    config:
+      pattern: "*seeded*.csv"
+      columns:
+        - occurrenceID
+
+  - id: dwc_eventdate_present
+    type: required
+    severity: fail
+    config:
+      pattern: "*seeded*.csv"
+      columns: ["eventDate"]
+
+  - id: dwc_eventdate_non_empty_trimmed
+    type: non_empty_trimmed
+    severity: fail
+    config:
+      pattern: "intertidal_obis_tiny_seeded.csv"
+      column: eventDate
+
+
+  # Within Range
+  - id: dwc_decimalLatitude_range
+    type: range
+    severity: fail
+    config:
+      pattern: "*seeded*.csv"
+      column: decimalLatitude
+      min: -90
+      max: 90
+      inclusive: true
+
+  - id: dwc_decimalLongitude_range
+    type: range
+    severity: fail
+    config:
+      pattern: "*seeded*.csv"
+      column: decimalLongitude
+      min: -180
+      max: 180
+      inclusive: true
+
+  - id: dwc_basisOfRecord_enum
+    type: enum
+    severity: warn
+    config:
+      pattern: "*seeded*.csv"
+      column: basisOfRecord
+      allow: ["HumanObservation"]
+      normalize: { casefold: true, trim: true} 

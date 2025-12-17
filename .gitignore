@@ -1,0 +1,21 @@
+# R noise
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python env / caches
+.venv/
+__pycache__/
+
+# OS noise
+.DS_Store
+
+# Keep archives out of GitHub
+reports/archive/
+
+# Optional: keep personal notes out of GitHub
+notes/
+datasets/raw/
+*.Rproj
+scripts/
+rulepacks/dwc_starter/

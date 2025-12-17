@@ -5,6 +5,11 @@
 - **FAIRy-core**: the underlying engine/codebase that FAIRy runs on.
 - This repo: a small example “bundle” (sample data + rules + example reports).
 
+## Darwin Core–style
+The checks in this starter target common Darwin Core occurrence fields:
+`occurrenceID`, `eventDate`, `decimalLatitude`, `decimalLongitude`, `basisOfRecord`.
+This is a small practical subset (not a full Darwin Core validator) meant to catch common issues early.
+
 ## Start here (no install required)
 If you just want to see what FAIRy outputs look like, you do **not** need to install anything.
 
@@ -33,7 +38,7 @@ fairy validate \
 ## Outputs
 After running, you should have:
 - reports/intertidal.json - machine-readable report
-- reports/intertidal.json - human-readable summary
+- reports/intertidal.md - human-readable summary
 
 ## How to interpret results
 

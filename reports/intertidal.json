@@ -2,11 +2,11 @@
   "attestation": {
     "inputs": [
       {
-        "bytes": 37414,
+        "bytes": 37448,
         "name": "occurrences",
         "path": "datasets/intertidal_obis_tiny_seeded.csv",
         "rows": 189,
-        "sha256": "1addbf8c9ab9b2ed420ffa845765810bf4a81966e89f33b5de1ef3d71d705a9c"
+        "sha256": "ec64334c093b82813866fe319d8bc0845b3218d0103d682d0124325a6d88a490"
       }
     ],
     "rulepack": {
@@ -14,7 +14,7 @@
       "path": "rulepacks/intertidal_starter/rulepack.yaml",
       "version": "0.1.0"
     },
-    "timestamp": "2025-12-17T21:38:38+00:00"
+    "timestamp": "2025-12-17T23:05:38+00:00"
   },
   "metadata": {
     "inputs": {
@@ -83,15 +83,14 @@
         },
         {
           "evidence": {
-            "count": 2,
+            "count": 1,
             "nullish": {
               "columns": [
                 "occurrenceID"
               ],
               "rows_by_column": {
                 "occurrenceID": [
-                  55,
-                  62
+                  55
                 ]
               }
             }

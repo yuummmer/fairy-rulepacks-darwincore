@@ -32,7 +32,7 @@ Each finding has:
 - a short message that often includes **row numbers**
 
 ### What “rows [54]” means
-Row numbers tell you where to look in the dataset to see the problem.
+The report’s row numbers refer to the CSV data rows. Depending on the tool you open the file in (Excel/Google Sheets vs a text editor), row numbers may appear off by 1 because of the header row.
 
 To inspect a row:
 1) Open the CSV file listed under **Inputs**
@@ -53,6 +53,8 @@ Meaning: a field that should uniquely identify each record has duplicates.
 Example from this report:
 - `[FAIL] dwc_occurrenceid_unique — unique`
 - “Duplicates at rows [62]”
+
+For duplicates, FAIRy lists the row(s) that repeat a prior value (the first instance is earlier in the file).
 
 What to do:
 - Inspect the duplicate value(s) around the referenced row(s).

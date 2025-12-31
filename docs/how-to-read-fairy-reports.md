@@ -1,6 +1,6 @@
-# How to read FAIRy reports (Intertidal starter)
+# How to read FAIRy reports (Darwin Core starter)
 
-This short guide explains what you’re seeing in `reports/intertidal-report.md` and how to act on it.
+This short guide explains how to interpret FAIRy report results (PASS/WARN/FAIL) and how to act on them.
 
 ## What FAIRy is doing
 FAIRy runs a set of checks (“rules”) against a dataset and summarizes what passed and what needs attention.

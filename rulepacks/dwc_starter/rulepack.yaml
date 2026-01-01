@@ -1,12 +1,12 @@
 meta:
-  name: intertidal_starter
+  name: dwc_starter
   version: 0.1.0
   description: Starter ingestion checks for Darwin Core-ish occurrence tables (tested on OBIS tiny CSV)
   target: csv
 
 tables:
   occurrences:
-    path: datasets/intertidal_obis_tiny_seeded.csv
+    path: datasets/fixtures/obis_sf_bay_mytilus_tiny_seeded.csv
 
 rules:
   # Core identifiers (blocking)
@@ -37,7 +37,7 @@ rules:
     type: non_empty_trimmed
     severity: fail
     config:
-      pattern: "intertidal_obis_tiny_seeded.csv"
+      pattern: "seeded*.csv"
       column: eventDate
 
 

@@ -2,40 +2,22 @@
 .Rhistory
 .RData
 .Rproj.user/
+*.Rproj
 
 # Python env / caches
 .venv/
 __pycache__/
+*.py[cod]
 
 # OS noise
 .DS_Store
 
-# Keep archives out of GitHub
-reports/archive/
-
-# Optional: keep personal notes out of GitHub
+# Local-only notes (optional)
 notes/
-datasets/raw/
-*.Rproj
-scripts/
-rulepacks/dwc_starter/
 
 # Raw dataset pulls (do not commit)
 datasets/raw/
 
-# Generated outputs
+# Generated outputs (do not commit)
 reports/
-
-# R artifacts
-.Rhistory
-.RData
-
-# Raw dataset pulls (do not commit)
-datasets/raw/
-
-# Generated outputs
-reports/
-
-# R artifacts
-.Rhistory
-.RData
+reports/archive/

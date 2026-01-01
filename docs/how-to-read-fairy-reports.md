@@ -14,8 +14,8 @@ The report is organized into:
 
 ## PASS vs WARN vs FAIL
 - **PASS**: the check is satisfied. Nothing to do.
-- **WARN**: something looks unusual or outside the expected values, but may be acceptable depending on context.
-- **FAIL**: the data violates the rule. This usually means the dataset needs a fix (or the rule needs to be adjusted).
+- **WARN**: something looks unusual or outside the expected values, but may be acceptable depending on context. Informational and review needed.
+- **FAIL**: the data violates the rule. This usually means the dataset needs a fix (or the rule needs to be adjusted). Generally means not submission ready.
 
 ## The “Summary” section
 Example:
@@ -62,7 +62,8 @@ For duplicates, FAIRy lists the row(s) that repeat a prior value (the first inst
 What to do:
 - Inspect the duplicate value(s) around the referenced row(s).
 - FAIRy’s `unique` check flags when the same `occurrenceID` appears more than once in the same file, which usually breaks record identity and downstream joins.
-- Decide whether:
+
+Decide whether:
   - the rows are accidental duplicates and should be removed/merged, or
   - the identifier needs to be corrected so each row has a distinct `occurrenceID`, or
   - you need a different identifier field for uniqueness in your workflow (advanced/custom rulepack).
@@ -89,6 +90,22 @@ What to do:
   - wrong sign (positive vs negative)
   - typing/format issue
 
+### `eventDate` format (WARN)
+FAIRy may warn if `eventDate` doesn’t look like an ISO date:
+- `YYYY-MM-DD`, or
+- `YYYY-MM-DD/YYYY-MM-DD` (date interval)
+
+What to do:
+- Normalize dates to ISO format where possible.
+- If your workflow uses full timestamps, this starter rule may be too strict (use a custom/advanced rulepack).
+
+### Suspicious coordinates (WARN)
+FAIRy flags `decimalLatitude` or `decimalLongitude` values of `0` / `0.0` because they’re often used as placeholders when coordinates are unknown. In many datasets, `(0,0)` is a strong sign of missing coordinates.
+
+What to do:
+- Verify the coordinates against the source.
+- If coordinates are unknown, prefer leaving them blank (workflow-dependent) rather than using `0`.
+
 ### `enum` (WARN)
 Meaning: the value isn’t in an allowed set (controlled vocabulary).
 Example from this report:
@@ -101,5 +118,25 @@ What to do:
   - update the dataset to use the expected value, or
   - update the rule’s allowed list if your organization expects other values.
 
+This starter normalizes case and trims leading/trailing whitespace, so capitalization/extra spaces at the ends won’t trigger a warning.
+
+### `regex` (WARN) — formatting checks (example: `countryCode`)
+Meaning: the value doesn’t match an expected format.
+
+Example:
+- `[WARN] dwc_countryCode_iso2 — regex`
+
+What to do:
+- Check `countryCode` in the referenced row(s).
+- In Darwin Core, `countryCode` is typically a **two-letter code** (ISO 3166-1 alpha-2 style), e.g. `US`, `SE`, `FR`.
+- Common fixes:
+  - `USA` → `US`
+  - extra whitespace → trim
+  - missing value → fill if your workflow requires it
+
 ## Re-run after changes
 After editing the CSV, re-run FAIRy using the command in the README. The report will update and you should see FAIL/WARN counts change.
+
+## When to change the data vs change the rulepack
+If a rule is obviously right for DwC (e.g. latitude out of range), fix the data
+If the rule is too strict for your workflow (timestamps, different controlled vocabulary, etc) adjust or override the rulepack.

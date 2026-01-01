@@ -41,3 +41,9 @@ See: `docs/how-to-read-fairy-reports.md`
 - `datasets/raw/` — local-only raw pulls (intentionally not committed)
 - `docs/` - docs and examples
 - `scripts/` - reproducible scripts to download/profile OBIS source data
+
+## License
+
+Unless otherwise noted, contents of this repository are dedicated to the public domain under **CC0 1.0**.
+
+Fixture datasets may be derived from external sources and remain subject to the original source’s license/attribution requirements (see `datasets/fixtures/README.md`).

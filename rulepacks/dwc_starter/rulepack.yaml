@@ -69,4 +69,4 @@ rules:
       pattern: "*seeded*.csv"
       column: basisOfRecord
       allow: ["LivingSpecimen","PreservedSpecimen","FossilSpecimen","MaterialCitation","HumanObservation", "MachineObservation"]
-      normalize: { casefold: true, trim: true} 
+      normalize: { casefold: true, trim: true}

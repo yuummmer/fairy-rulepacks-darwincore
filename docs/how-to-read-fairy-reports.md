@@ -2,6 +2,8 @@
 
 This short guide explains how to interpret FAIRy report results (PASS/WARN/FAIL) and how to act on them.
 
+_Scope note: FAIRy community rulepacks provide practical checks and guidance, but they are not the authoritative source for Darwin Core/GBIF policy. Where domain semantics matter, we link to official documentation._
+
 ## What FAIRy is doing
 FAIRy runs a set of checks (“rules”) against a dataset and summarizes what passed and what needs attention.
 
@@ -50,6 +52,7 @@ What to do:
 
 ### `unique` (FAIL)
 Meaning: a field that should uniquely identify each record has duplicates (identifier collision).
+
 Example from this report:
 - `[FAIL] dwc_occurrenceid_unique — unique`
 - “Duplicates at rows [62]”
@@ -58,11 +61,20 @@ For duplicates, FAIRy lists the row(s) that repeat a prior value (the first inst
 
 What to do:
 - Inspect the duplicate value(s) around the referenced row(s).
-- Important nuance: "duplicate records" in biodiversity data can be valid (e.g. a preserved specimen record and a DNA-derived record about the same organism). FAIRy's `unique` check is narrower: it flags when the same `occurrenceID` appears more than once in the same file, which usually breaks record identity and downstream joins.
+- FAIRy’s `unique` check flags when the same `occurrenceID` appears more than once in the same file, which usually breaks record identity and downstream joins.
 - Decide whether:
   - the rows are accidental duplicates and should be removed/merged, or
   - the identifier needs to be corrected so each row has a distinct `occurrenceID`, or
   - you need a different identifier field for uniqueness in your workflow (advanced/custom rulepack).
+
+### Duplicates in biodiversity data (important nuance)
+FAIRy’s `unique` checks are about **identifier collisions inside a single file** (e.g., the same `occurrenceID` appearing twice). This usually indicates a data hygiene issue that can break joins and downstream processing.
+
+Biodiversity aggregators (like GBIF) may include multiple valid records that refer to the same underlying organism or sampling context (e.g., a preserved specimen record and a DNA-derived record). These are sometimes called “scientific duplicates” and are not always errors. Tools like GBIF’s clustering can help **estimate** duplication, but you should not automatically remove clustered records without review.
+
+Domain reference:
+- GBIF “Duplicates” (data use course): https://docs.gbif.org/course-data-use/en/duplicates.html
+- GBIF technical docs on clustering: https://techdocs.gbif.org/en/data-processing/clustering-occurrences
 
 ### `range` (FAIL)
 Meaning: a numeric value is outside an allowed range.

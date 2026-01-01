@@ -68,5 +68,5 @@ rules:
     config:
       pattern: "*seeded*.csv"
       column: basisOfRecord
-      allow: ["HumanObservation"]
+      allow: ["LivingSpecimen","PreservedSpecimen","FossilSpecimen","MaterialCitation","HumanObservation", "MachineObservation"]
       normalize: { casefold: true, trim: true} 

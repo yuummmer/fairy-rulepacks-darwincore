@@ -49,7 +49,7 @@ What to do:
 - Find the referenced row(s) and fill in the missing value in the required column (here: `occurrenceID`).
 
 ### `unique` (FAIL)
-Meaning: a field that should uniquely identify each record has duplicates.
+Meaning: a field that should uniquely identify each record has duplicates (identifier collision).
 Example from this report:
 - `[FAIL] dwc_occurrenceid_unique — unique`
 - “Duplicates at rows [62]”
@@ -58,9 +58,11 @@ For duplicates, FAIRy lists the row(s) that repeat a prior value (the first inst
 
 What to do:
 - Inspect the duplicate value(s) around the referenced row(s).
+- Important nuance: "duplicate records" in biodiversity data can be valid (e.g. a preserved specimen record and a DNA-derived record about the same organism). FAIRy's `unique` check is narrower: it flags when the same `occurrenceID` appears more than once in the same file, which usually breaks record identity and downstream joins.
 - Decide whether:
-  - the records are truly duplicates and should be removed/merged, or
-  - the identifier needs to be corrected so each row has a distinct `occurrenceID`.
+  - the rows are accidental duplicates and should be removed/merged, or
+  - the identifier needs to be corrected so each row has a distinct `occurrenceID`, or
+  - you need a different identifier field for uniqueness in your workflow (advanced/custom rulepack).
 
 ### `range` (FAIL)
 Meaning: a numeric value is outside an allowed range.

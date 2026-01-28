@@ -11,6 +11,7 @@ __pycache__/
 
 # OS noise
 .DS_Store
+*:Zone.Identifier
 
 # Local-only notes (optional)
 notes/

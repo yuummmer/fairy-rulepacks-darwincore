@@ -2,11 +2,6 @@ meta:
   name: dwc_starter
   version: 0.1.0
   description: Starter ingestion checks for Darwin Core-ish occurrence tables (tested on OBIS tiny CSV)
-  target: csv
-
-tables:
-  occurrences:
-    path: datasets/fixtures/obis_sf_bay_mytilus_tiny_seeded.csv
 
 rules:
   # Core identifiers (blocking)
@@ -14,7 +9,7 @@ rules:
     type: required
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       columns:
         - occurrenceID
 
@@ -22,30 +17,38 @@ rules:
     type: unique
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       columns:
         - occurrenceID
 
-  #Dates (blocking)
+  - id: dwc_id_unique
+    type: unique
+    severity: fail
+    config:
+      pattern: "occurrence*.tsv"
+      columns:
+        - id
+
+  # Dates (blocking)
   - id: dwc_eventdate_present
     type: required
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       columns: ["eventDate"]
 
   - id: dwc_eventdate_non_empty_trimmed
     type: non_empty_trimmed
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: eventDate
 
   - id: dwc_eventdate_looks_iso
     type: regex
     severity: warn
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: eventDate
       # Accept ISO date or date interval: 2019-10-29 or 2019-10-29/2019-10-29
       regex: "^\\s*\\d{4}-\\d{2}-\\d{2}(\\s*/\\s*\\d{4}-\\d{2}-\\d{2})?\\s*$"
@@ -57,7 +60,7 @@ rules:
     type: range
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: decimalLatitude
       min: -90
       max: 90
@@ -67,7 +70,7 @@ rules:
     type: range
     severity: fail
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: decimalLongitude
       min: -180
       max: 180
@@ -77,7 +80,7 @@ rules:
     type: regex
     severity: warn
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: decimalLatitude
       regex: "^\\s*-?0(\\.0+)?\\s*$"
       mode: matches
@@ -87,19 +90,18 @@ rules:
     type: regex
     severity: warn
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: decimalLongitude
       regex: "^\\s*-?0(\\.0+)?\\s*$"
       mode: matches
       ignore_empty: true
-
 
   # Controlled vocabulary / codes
   - id: dwc_basisOfRecord_enum
     type: enum
     severity: warn
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: basisOfRecord
       allow: 
         - LivingSpecimen
@@ -114,9 +116,18 @@ rules:
     type: regex
     severity: warn
     config:
-      pattern: "*seeded*.csv"
+      pattern: "occurrence*.tsv"
       column: countryCode
       # Two-letter country codes (ISO 3166-1 alpha-2 style), e.g. US, SE, FR
       regex: "^[A-Za-z]{2}$"
       mode: not_matches
       ignore_empty: true
+
+  - id: dwc_scientificName_present
+    type: required
+    severity: fail
+    config:
+      pattern: "occurrence*.tsv"
+      columns:
+        - scientificName
+
